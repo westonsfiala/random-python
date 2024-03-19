@@ -41,6 +41,7 @@ sorted_character_list = [
     "Nina",
     "Ochlys",
     "Primm",
+    "Railanor",
     "Renault",
     "Ridiel",
     "Rolf",
@@ -122,6 +123,7 @@ rapport_map = {
         "Scarlett": 2,
         "Tatiana": 1,
         "Sharon": 1,
+        "Railanor": 1,
         "Lex": 1,
         "Selvie": 1,
         "Chloe": 2,
@@ -345,6 +347,7 @@ rapport_map = {
         "Sharon": 1,
         "Miriam": 1,
         "Lex": 1,
+        "Railanor": 1,
     },
     "Monica" : {
         "Alain": 1,
@@ -465,6 +468,7 @@ rapport_map = {
         "Scarlett": 1,
         "Ithilion": 2,
         "Eltolinde": 2,
+        "Railanor": 2,
     },
     "Lhinalagos" : {
         "Alain": 1,
@@ -485,6 +489,7 @@ rapport_map = {
         "Lhinalagos": 1,
         "Magellan": 1,
         "Galadmir": 1,
+        "Railanor": 2,
     },
     "Eltolinde" : {
         "Alain": 3,
@@ -500,6 +505,13 @@ rapport_map = {
         "Eltolinde": 2,
         "Lhinalagos": 2,
         "Ridiel": 1,
+    },
+    "Railanor" : {
+        "Alain": 2,
+        "Lex": 1,
+        "Rosalinde": 2,
+        "Colm": 1,
+        "Ithilion": 2,
     },
 }
 
@@ -601,7 +613,7 @@ def find_best_squad_recurse(requested_squad_size, current_squad, best_squad, pos
     return best_squad
 
 # How many squads do we need and what size are they.
-squad_sizes = [5, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+squad_sizes = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
 
 squads = []
 
@@ -612,7 +624,8 @@ for squad_size in squad_sizes:
     # Do Alain's Squad alone, to save time.
     if squads.__len__() == 0:
         modifiable_top_list.remove("Alain")
-        best_squad = find_best_squad_recurse(squad_size, ["Alain"], [], modifiable_top_list, set())
+        modifiable_top_list.remove("Scarlett")
+        best_squad = find_best_squad_recurse(squad_size, ["Alain", "Scarlett"], [], modifiable_top_list, set())
     else:
         best_squad = find_best_squad_recurse(squad_size, [], [], modifiable_top_list, set())
     squads.append(best_squad)
@@ -624,3 +637,4 @@ for squad in squads:
     print(squad)
 
 print("unused: ", modifiable_top_list)
+

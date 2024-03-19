@@ -31,7 +31,7 @@ def randomizedSet():
     return lst
 
 # set up the seed for the randomizer
-randSeed = 2026
+randSeed = 2024
 random.seed(randSeed)
 
 done = False
