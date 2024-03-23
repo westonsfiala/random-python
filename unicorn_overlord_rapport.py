@@ -18,6 +18,7 @@ sorted_character_list = [
     "Chloe",
     "Clive",
     "Colm",
+    "Dinah",
     "Eltolinde",
     "Fran",
     "Galadmir",
@@ -37,11 +38,13 @@ sorted_character_list = [
     "Melisandre",
     "Miriam",
     "Monica",
+    "Morard",
     "Mordon",
     "Nina",
     "Ochlys",
     "Primm",
     "Railanor",
+    "Ramona",
     "Renault",
     "Ridiel",
     "Rolf",
@@ -53,6 +56,7 @@ sorted_character_list = [
     "Travis",
     "Virginia",
     "Yahna",
+    "Yunifi",
 ]
 
 # Map of all the characters and their personal rapport intensities
@@ -105,6 +109,10 @@ rapport_map = {
         "Celeste": 2,
         "Ochlys": 3,
         "Renault": 1,
+        "Morard": 2,
+        "Yunifi": 3,
+        "Ramona": 2,
+        "Dinah" : 3,
     },
     "Scarlett" : {
         "Alain": 3,
@@ -115,6 +123,7 @@ rapport_map = {
         "Melisandre": 1,
         "Rosalinde": 1,
         "Eltolinde": 1,
+        "Yunifi": 1,
     },
     "Lex" : {
         "Alain": 3,
@@ -199,6 +208,7 @@ rapport_map = {
         "Jeremy": 2,
         "Gloucester": 1,
         "Ridiel": 1,
+        "Dinah" : 1,
     },
     "Rolf" : {
         "Alain": 2,
@@ -206,6 +216,7 @@ rapport_map = {
         "Adel": 1,
         "Mordon": 1,
         "Auch": 2,
+        "Dinah" : 1,
     },
     "Bruno" : {
         "Alain": 2,
@@ -281,6 +292,7 @@ rapport_map = {
         "Miriam": 2,
         "Virginia": 1,
         "Hilda": 1,
+        "Ramona": 1,
     },
     "Selvie" : {
         "Alain": 3,
@@ -356,6 +368,8 @@ rapport_map = {
         "Selvie": 1,
         "Melisandre": 1,
         "Liza": 1,
+        "Morard": 1,
+        "Ramona": 1,
     },
     "Virginia" : {
         "Alain": 3,
@@ -368,6 +382,7 @@ rapport_map = {
         "Aramis": 2,
         "Gilbert": 2,
         "Berengaria": 1,
+        "Yunifi": 1,
     },
     "Leah" : {
         "Alain": 2,
@@ -389,6 +404,7 @@ rapport_map = {
         "Travis": 1,
         "Aramis": 2,
         "Hilda": 2,
+        "Dinah" : 1,
     },
     "Aramis" : {
         "Alain": 2,
@@ -440,6 +456,8 @@ rapport_map = {
         "Magellan": 1,
         "Tatiana": 1,
         "Fran": 1,
+        "Morard": 1,
+        "Yunifi": 1,
     },
     "Ridiel" : {
         "Alain": 3,
@@ -498,6 +516,7 @@ rapport_map = {
         "Lex": 1,
         "Scarlett": 1,
         "Rosalinde": 2,
+        "Yunifi": 1,
     },
     "Galadmir" : {
         "Alain": 1,
@@ -512,7 +531,40 @@ rapport_map = {
         "Rosalinde": 2,
         "Colm": 1,
         "Ithilion": 2,
+        "Dinah" : 1,
     },
+    "Morard" : {
+        "Alain": 2,
+        "Hilda": 1,
+        "Monica": 1,
+        "Ramona": 2,
+        "Yunifi": 2,
+    },
+    "Yunifi" : {
+        "Alain": 3,
+        "Scarlett": 1,
+        "Virginia": 1,
+        "Hilda": 1,
+        "Eltolinde": 1,
+        "Morard": 2,
+        "Ramona": 2,
+        "Dinah" : 2,
+    },
+    "Ramona" : {
+        "Alain": 2,
+        "Morard": 2,
+        "Yunifi": 2,
+        "Monica": 1,
+        "Fran": 1,
+    },
+    "Dinah" : {
+        "Alain": 3,
+        "Aubin": 1,
+        "Rolf": 1,
+        "Railanor": 1,
+        "Yunifi": 2,
+        "Primm": 1,
+    }
 }
 
 # Takes a list of names and finds the intensity of their rapport
@@ -527,7 +579,7 @@ def calculate_squad_rapport(squad_names):
                     squad_rapport += rapport_intensity
     return squad_rapport / 2
 
-# Gets the maximum possible rapport intenstity that a given member can have in a given squad size
+# Gets the maximum possible rapport intensity that a given member can have in a given squad size
 def maximum_possible_rapport_intensity(character_name, squad_size):
     intensity_values = list(rapport_map[character_name].values())
 
@@ -595,7 +647,7 @@ def find_best_squad_recurse(requested_squad_size, current_squad, best_squad, pos
             if max_rapport_intensity <= lowest_current_intensity:
                 should_continue = False
 
-            # Failsafes
+            # Fail safes
             if best_squad.__len__() == 0:
                 should_continue = True
 
@@ -613,28 +665,48 @@ def find_best_squad_recurse(requested_squad_size, current_squad, best_squad, pos
     return best_squad
 
 # How many squads do we need and what size are they.
-squad_sizes = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+squad_sizes = [5, 5, 5, 5, 5, 4, 4, 4, 4, 4]
 
+# Special squads that I want to have
+special_squads = [
+    ["Alain", "Rosalinde", "Scarlett"], 
+    ["Berengaria", "Travis", "Bruno"], 
+    ["Virginia", "Gilbert"], 
+    ["Clive", "Monica"],
+    ]
 squads = []
 
 modifiable_top_list = sorted_character_list.copy()
 
-for squad_size in squad_sizes:
+# Remove the members of the special squads from the top list.
+for squad in special_squads:
+    for member in squad:
+        if modifiable_top_list.__contains__(member):
+            modifiable_top_list.remove(member)
+
+# Find the best squads
+for squad_index in range(squad_sizes.__len__()):
+    squad_size = squad_sizes[squad_index]
     best_squad = []
-    # Do Alain's Squad alone, to save time.
-    if squads.__len__() == 0:
-        modifiable_top_list.remove("Alain")
-        modifiable_top_list.remove("Scarlett")
-        best_squad = find_best_squad_recurse(squad_size, ["Alain", "Scarlett"], [], modifiable_top_list, set())
-    else:
-        best_squad = find_best_squad_recurse(squad_size, [], [], modifiable_top_list, set())
+
+    # If we have already pre-made a squad, use it.
+    if squad_index < special_squads.__len__():
+        best_squad = special_squads[squad_index]
+
+    # Fill out the rest of the squad
+    best_squad = find_best_squad_recurse(squad_size, best_squad, [], modifiable_top_list, set())
+
+    # Add the best squad to the list of squads
     squads.append(best_squad)
+
+    # Remove the members of the best squad from the top list.
     for member in best_squad:
         if modifiable_top_list.__contains__(member):
             modifiable_top_list.remove(member)
 
 for squad in squads:
-    print(squad)
+    squad_intensity = calculate_squad_rapport(squad)
+    print(squad, "  -  ", squad_intensity)
 
 print("unused: ", modifiable_top_list)
 
