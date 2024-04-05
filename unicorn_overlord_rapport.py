@@ -4,61 +4,6 @@ Parties may not be optimal, but each group will have a lot to talk about.
 @author Weston Fiala
 '''
 
-# All of the characters in alphabetical order
-sorted_character_list = [
-    "Alain",
-    "Adel",
-    "Aramis",
-    "Aubin",
-    "Auch",
-    "Berengaria",
-    "Berenice",
-    "Bruno",
-    "Celeste",
-    "Chloe",
-    "Clive",
-    "Colm",
-    "Dinah",
-    "Eltolinde",
-    "Fran",
-    "Galadmir",
-    "Gilbert",
-    "Gloucester",
-    "Hilda",
-    "Hodrick",
-    "Ithilion",
-    "Jeremy",
-    "Josef",
-    "Kitra",
-    "Leah",
-    "Lex",
-    "Lhinalagos",
-    "Liza",
-    "Magellan",
-    "Melisandre",
-    "Miriam",
-    "Monica",
-    "Morard",
-    "Mordon",
-    "Nina",
-    "Ochlys",
-    "Primm",
-    "Railanor",
-    "Ramona",
-    "Renault",
-    "Ridiel",
-    "Rolf",
-    "Rosalinde",
-    "Scarlett",
-    "Selvie",
-    "Sharon",
-    "Tatiana",
-    "Travis",
-    "Virginia",
-    "Yahna",
-    "Yunifi",
-]
-
 # Map of all the characters and their personal rapport intensities
 # Keys are in order of character recruitment
 # Inner intensity keys are in "fuck if I know" order
@@ -113,6 +58,10 @@ rapport_map = {
         "Yunifi": 3,
         "Ramona": 2,
         "Dinah" : 3,
+        "Bertrand": 1,
+        "Govil": 1,
+        "Bryce": 1,
+        "Amalia": 1,
     },
     "Scarlett" : {
         "Alain": 3,
@@ -167,6 +116,7 @@ rapport_map = {
         "Yahna": 1,
         "Scarlett": 2,
         "Ridiel": 2,
+        "Amalia": 1,
     },
     "Hodrick" : {
         "Alain": 3,
@@ -224,6 +174,7 @@ rapport_map = {
         "Berengaria": 2,
         "Sharon": 2,
         "Selvie": 1,
+        "Bryce": 1,
     },
     "Sharon" : {
         "Alain": 3,
@@ -242,6 +193,7 @@ rapport_map = {
         "Jeremy": 1,
         "Kitra": 3,
         "Lhinalagos": 1,
+        "Amalia": 1,
     },
     "Yahna" : {
         "Alain": 2,
@@ -266,6 +218,7 @@ rapport_map = {
         "Alain": 3,
         "Sharon": 2,
         "Tatiana": 1,
+        "Bertrand": 1,
     },
     "Auch" : {
         "Alain": 2,
@@ -308,6 +261,7 @@ rapport_map = {
         "Yahna": 1,
         "Tatiana": 1,
         "Monica": 1,
+        "Bryce": 3,
     },
     "Miriam" : {
         "Alain": 2,
@@ -390,6 +344,8 @@ rapport_map = {
         "Aramis": 1,
         "Gilbert": 2,
         "Berengaria": 1,
+        "Bertrand": 1,
+        "Amalia": 1,
     },
     "Berengaria" : {
         "Alain": 3,
@@ -441,6 +397,7 @@ rapport_map = {
         "Jeremy": 1,
         "Magellan": 1,
         "Aubin": 1,
+        "Govil": 1,
     },
     "Jeremy" : {
         "Alain": 1,
@@ -549,6 +506,8 @@ rapport_map = {
         "Morard": 2,
         "Ramona": 2,
         "Dinah" : 2,
+        "Bertrand": 1,
+        "Govil": 2,
     },
     "Ramona" : {
         "Alain": 2,
@@ -564,7 +523,31 @@ rapport_map = {
         "Railanor": 1,
         "Yunifi": 2,
         "Primm": 1,
-    }
+    },
+    "Bertrand" : {
+        "Alain": 1,
+        "Yunifi": 1,
+        "Leah": 1,
+        "Ochlys": 1,
+        "Govil": 2,
+    },
+    "Govil" : {
+        "Alain": 1,
+        "Gloucester": 1,
+        "Yunifi": 2,
+        "Bertrand": 2,
+    },
+    "Bryce" : {
+        "Alain": 1,
+        "Bruno": 1,
+        "Nina": 3,
+    },
+    "Amalia" : {
+        "Alain": 1,
+        "Chloe": 1,
+        "Mordon": 1,
+        "Leah": 1,
+    },
 }
 
 # Takes a list of names and finds the intensity of their rapport
@@ -676,7 +659,7 @@ special_squads = [
     ]
 squads = []
 
-modifiable_top_list = sorted_character_list.copy()
+modifiable_top_list = list(rapport_map.keys())
 
 # Remove the members of the special squads from the top list.
 for squad in special_squads:
